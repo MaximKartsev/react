@@ -1,0 +1,175 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+
+.wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  font-weight: bold;
+  text-align: center;
+}
+
+.wrapper > * {
+  padding: 10px;
+  flex: 1 100%;
+}
+
+.wrapper > h1 {
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Nunito, sans-serif;
+  background: #f5f6f7;
+  padding: 2em;
+}
+
+.add-note {
+  background: gold;
+  margin: 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.add-note input {
+  display: block;
+  margin: 1rem auto;
+  width: 20rem;
+  padding: 0.5rem;
+  border: 1px solid #00b8e6;
+  border-radius: 10px;
+  outline: none;
+}
+
+
+.add-note textarea {
+  display: block;
+  margin: 1rem auto;
+  width: 20rem;
+  height: 7rem;
+  padding: 0.5rem;
+  border: 1px solid #00b8e6;
+  border-radius: 10px;
+  outline: none;
+}
+
+.add-note button {
+  width: 21rem;
+  padding: 0.7rem;
+  border: 1px solid #00b8e6;
+  background: #00b8e6;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+.note-preview-list {
+  background: gold;
+  margin: 0;
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.note-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.note-title {
+  flex-grow: 4;
+}
+
+.note-buttons:not(:last-child) {
+  border-bottom: 2px solid #f5f6f7;
+}
+
+.note-buttons h1 {
+  color: #222;
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+
+.note-buttons p {
+  padding-right: 1rem;
+  color: #444;
+}
+
+.note-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.note-buttons button.red {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #d34b4b;
+  background: #d34b4b;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+.note-buttons button.blue {
+  padding: 0.5rem 0.7rem;
+  margin-left: 0.2rem;
+  border: 1px solid #504bd3;
+  background: #504BD3FF;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+.note-buttons button.red:hover {
+  background: #e06a6a;
+}
+
+.note-buttons button.blue:hover {
+  background: #6a7ee0;
+}
+
+@media all and (min-width: 600px) {
+  .aside { flex: 1 0 0; }
+}
+
+.header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 10px;
+}
+
+.header button {
+  text-decoration: none;
+  display: block;
+  padding: 1em;
+  color: white;
+  background: deepskyblue;
+  border: 0;
+  border-radius: 10px;
+}
+
+.header button:hover {
+  background: #1565C0;
+  border: 0;
+}
