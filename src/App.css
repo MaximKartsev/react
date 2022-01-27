@@ -71,6 +71,15 @@ body {
   outline: none;
 }
 
+.add-note button:disabled,
+.add-note button[disabled]{
+  border: 1px solid #cccccc;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  pointer-events:none;
+}
+
 .note-preview-list {
   background: gold;
   margin: 0;
