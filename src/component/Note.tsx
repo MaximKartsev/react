@@ -3,6 +3,8 @@ import {useEffect, useState} from "react"
 import {Dispatch} from "redux";
 import {useDispatch} from "react-redux";
 import {addNoteAction, editNoteAction} from "../store/actionCreators";
+import {NoteTitleLengthValidator} from "./validator/NoteTitleLengthValidator";
+import {NoteContentLengthValidator} from "./validator/NoteContentLengthValidator";
 
 export enum InteractionType {
     CreateNote = 'CreateNote',
@@ -17,8 +19,8 @@ type NoteProps = {
 export const Note: React.FC<NoteProps> = ({interactionType, note}) => {
     const [title, setTitle] = useState<string>('')
     const [content, setContent] = useState<string>('')
-    const maxTitleLength = 50
-    const maxContentLength = 1000
+    const [titleValid, setTitleValid] = useState<boolean>()
+    const [contentValid, setContentValid] = useState<boolean>()
 
     useEffect(() => {
         setTitle(note.title)
@@ -37,10 +39,6 @@ export const Note: React.FC<NoteProps> = ({interactionType, note}) => {
 
     const addNewNote = (e: React.FormEvent) => {
         e.preventDefault()
-        if (title.length > maxTitleLength || content.length > maxContentLength) {
-            alert('Title or content length is greater than allowed')
-            return
-        }
         saveNoteDispatch({
             id: Date.now() + Math.random().toString(),
             title: filterTags(title),
@@ -49,11 +47,6 @@ export const Note: React.FC<NoteProps> = ({interactionType, note}) => {
     }
 
     const editNoteHandler = (e: React.FormEvent) => {
-        e.preventDefault()
-        if (title.length > maxTitleLength || content.length > maxContentLength) {
-            alert('Title or content length is greater than allowed')
-            return
-        }
         editNoteDispatch({...note, title: filterTags(title), content: filterTags(content)})
     }
 
@@ -69,12 +62,7 @@ export const Note: React.FC<NoteProps> = ({interactionType, note}) => {
                     onChange={(event) => setTitle(event.currentTarget.value)}
                 />
             </label>
-            {title.length > maxTitleLength && (
-                <React.Fragment>
-                    <p>maximum title length is {maxTitleLength} characters</p>
-                    <p>maximum length exceeded by {title.length - maxTitleLength} characters</p>
-                </React.Fragment>
-            )}
+            <NoteTitleLengthValidator value={title} callback={(valid) => setTitleValid(valid)}/>
             <label>
                 {interactionType === InteractionType.CreateNote ? 'Content:' : 'Edit Content:'}
                 <textarea
@@ -84,13 +72,8 @@ export const Note: React.FC<NoteProps> = ({interactionType, note}) => {
                     onChange={(event) => setContent(event.currentTarget.value)}
                 />
             </label>
-            {content.length > maxContentLength && (
-                <React.Fragment>
-                    <p>maximum content length is {maxContentLength} characters</p>
-                    <p>maximum length exceeded by {content.length - maxContentLength} characters</p>
-                </React.Fragment>
-            )}
-            <button disabled={!title || !content}>
+            <NoteContentLengthValidator value={content} callback={(valid) => setContentValid(valid)}/>
+            <button disabled={!titleValid || !contentValid}>
                 {interactionType === InteractionType.CreateNote ? 'Add note' : 'Edit note'}
             </button>
         </form>
