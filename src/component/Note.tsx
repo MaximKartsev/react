@@ -3,8 +3,7 @@ import {useEffect, useState} from "react"
 import {Dispatch} from "redux";
 import {useDispatch} from "react-redux";
 import {addNoteAction, editNoteAction} from "../store/actionCreators";
-import {NoteTitleLengthValidator} from "./validator/NoteTitleLengthValidator";
-import {NoteContentLengthValidator} from "./validator/NoteContentLengthValidator";
+import {NoteLengthValidator} from "./validator/NoteLengthValidator";
 
 export enum InteractionType {
     CreateNote = 'CreateNote',
@@ -62,7 +61,10 @@ export const Note: React.FC<NoteProps> = ({interactionType, note}) => {
                     onChange={(event) => setTitle(event.currentTarget.value)}
                 />
             </label>
-            <NoteTitleLengthValidator value={title} callback={(valid) => setTitleValid(valid)}/>
+            <NoteLengthValidator value={title}
+                                 fieldName = {'title'}
+                                 maxLength = {50}
+                                 callback={(valid) => setTitleValid(valid)}/>
             <label>
                 {interactionType === InteractionType.CreateNote ? 'Content:' : 'Edit Content:'}
                 <textarea
@@ -72,7 +74,10 @@ export const Note: React.FC<NoteProps> = ({interactionType, note}) => {
                     onChange={(event) => setContent(event.currentTarget.value)}
                 />
             </label>
-            <NoteContentLengthValidator value={content} callback={(valid) => setContentValid(valid)}/>
+            <NoteLengthValidator value={content}
+                                        fieldName = {'content'}
+                                        maxLength = {1000}
+                                        callback={(valid) => setContentValid(valid)}/>
             <button disabled={!titleValid || !contentValid}>
                 {interactionType === InteractionType.CreateNote ? 'Add note' : 'Edit note'}
             </button>
