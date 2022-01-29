@@ -1,11 +1,10 @@
 import React from 'react';
 import '../App.css';
 import {useSelector} from "react-redux";
-import {CreateNote} from "./CreateNote";
+import {InteractionType, Note} from "./Note";
 import {CREATE_MODE, VIEW_MODE} from "../store/actionTypes";
-import {Note} from "./Note";
+import {NoteView} from "./NoteView";
 import {RootState} from "../reducers/root.reducer";
-import {EditNote} from "./EditNote";
 
 export const Explorer: React.FC = () => {
     const viewState = useSelector(
@@ -22,14 +21,18 @@ export const Explorer: React.FC = () => {
     if (viewMode === CREATE_MODE || viewMode === undefined) {
         return (
             <div className="aside">
-                <CreateNote/>
+                <Note interactionType={InteractionType.CreateNote} note={{
+                    id: '',
+                    title: '',
+                    content: ''
+                }}/>
             </div>
         )
     } else if (viewMode === VIEW_MODE) {
         return (
             <div className="aside">
                 <div className="note-preview-list">
-                    <Note
+                    <NoteView
                         key={viewNote.id}
                         note={viewNote}
                     />
@@ -39,7 +42,7 @@ export const Explorer: React.FC = () => {
     } else {
         return (
             <div className="aside">
-                <EditNote note={viewNote} />
+                <Note interactionType={InteractionType.EditNote} note={viewNote}/>
             </div>
         )
     }
