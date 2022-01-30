@@ -12,7 +12,7 @@ export enum InteractionType {
 
 type NoteProps = {
     readonly interactionType: InteractionType
-    note: INote
+    readonly note: INote
 }
 
 export const Note: React.FC<NoteProps> = ({interactionType, note}) => {

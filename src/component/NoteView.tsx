@@ -1,11 +1,12 @@
 import * as React from "react"
+import {useEffect, useState} from "react";
 
 type Props = {
     note: INote
 }
 
 export const NoteView: React.FC<Props> = ({note}) => {
-    const title = note.title.replace(/(<([^>]+)>)/gi, "");
+    const [title] = useState(() => note.title.replace(/(<([^>]+)>)/gi, ""));
 
     return (
         <div className="note-container">
