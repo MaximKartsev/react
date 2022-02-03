@@ -1,46 +1,53 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../App.css';
-import {useSelector} from "react-redux";
-import {CreateNote} from "./CreateNote";
-import {CREATE_MODE, VIEW_MODE} from "../store/actionTypes";
-import {Note} from "./Note";
+import {useDispatch, useSelector} from "react-redux";
+import {NoteForm} from "./NoteForm";
+import {VIEW_MODE} from "../store/actionTypes";
+import {NoteView} from "./NoteView";
 import {RootState} from "../reducers/root.reducer";
-import {EditNote} from "./EditNote";
+import {Dispatch} from "redux";
+import {addNoteAction, editNoteAction} from "../store/actionCreators";
 
 export const Explorer: React.FC = () => {
     const viewState = useSelector(
         (state: RootState) => state.viewReducer
     );
 
-    const viewMode = viewState.type;
-    const viewNote = viewState.note || {
-        id: '',
-        title: '',
-        content: ''
-    };
+    const dispatch: Dispatch<any> = useDispatch()
+    const [title, setTitle] = useState<string>(viewState.note?.title || '')
+    const [content, setContent] = useState<string>(viewState.note?.content || '')
 
-    if (viewMode === CREATE_MODE || viewMode === undefined) {
+    useEffect(() => {
+        setTitle(viewState.note?.title || '');
+        setContent(viewState.note?.content || '');
+    }, [viewState.note])
+
+    const createHandler = () => {
+        const note = {...viewState.note, title, content};
+        if (note.id && note.id !== '') {
+            dispatch(editNoteAction(note))
+            return
+        }
+        dispatch(addNoteAction({...note, id: Date.now() + Math.random().toString()}))
+    }
+
+    if (viewState.type === VIEW_MODE) {
         return (
             <div className="aside">
-                <CreateNote/>
-            </div>
-        )
-    } else if (viewMode === VIEW_MODE) {
-        return (
-            <div className="aside">
-                <div className="note-preview-list">
-                    <Note
-                        key={viewNote.id}
-                        note={viewNote}
-                    />
-                </div>
-            </div>
-        )
-    } else {
-        return (
-            <div className="aside">
-                <EditNote note={viewNote} />
+                <NoteView
+                    key={viewState.note?.id || 'new'}
+                    note={viewState.note}
+                />
             </div>
         )
     }
+
+    return (
+        <div className="aside">
+            <NoteForm note={{...viewState.note, title, content}}
+                      setTitle={setTitle}
+                      setContent={setContent}
+                      createCallback={createHandler}/>
+        </div>
+    )
 }
