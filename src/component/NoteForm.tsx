@@ -19,19 +19,12 @@ export const NoteForm: React.FC<NoteProps> = ({
                                               }) => {
     const titleValid = useMemo(() => {
         const titleLength = removeHTMLTags(note?.title).length;
-        console.log('titleLength')
-        console.log(titleLength)
         return titleLength > 0 && titleLength < MAX_TITLE_LENGTH
     }, [note])
     const contentValid = useMemo(() => {
         const contentLength = removeHTMLTags(note?.content).length;
-        console.log('contentLength')
-        console.log(contentLength)
         return contentLength > 0 && contentLength < MAX_CONTENT_LENGTH
     }, [note])
-
-    console.log('NoteForm');
-    console.log(note);
 
     const handleSubmit = () => {
         createCallback()
