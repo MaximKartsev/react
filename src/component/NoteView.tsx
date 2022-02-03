@@ -1,18 +1,18 @@
 import * as React from "react"
-import {useEffect, useState} from "react";
+import {useState} from "react"
 
 type Props = {
-    note: INote
+    note?: INote
 }
 
-export const NoteView: React.FC<Props> = ({note}) => {
-    const [title] = useState(() => note.title.replace(/(<([^>]+)>)/gi, ""));
-
+export const NoteView: React.FC<Props> = ({note = {title: '', content: ''}}) => {
     return (
-        <div className="note-container">
-            <div className="note-title">
-                <h1>{title}</h1>
-                <div dangerouslySetInnerHTML={{__html: note.content}}/>
+        <div className="note-preview-list">
+            <div className="note-container">
+                <div className="note-title">
+                    <h1>{note.title}</h1>
+                    <div dangerouslySetInnerHTML={{__html: note.content}}/>
+                </div>
             </div>
         </div>
     )

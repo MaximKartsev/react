@@ -1,4 +1,5 @@
 import * as actionTypes from "../store/actionTypes"
+import {removeHTMLTags} from "../helper/html";
 
 const initialState: NoteState = {
     notes: [
@@ -25,8 +26,8 @@ const noteReducer = (
         case actionTypes.CREATE_NOTE:
             const newNote: INote = {
                 id: action.note.id,
-                title: action.note.title,
-                content: action.note.content,
+                title: removeHTMLTags(action.note.title),
+                content: removeHTMLTags(action.note.content)
             }
             return {
                 ...state,
@@ -37,8 +38,8 @@ const noteReducer = (
                 note => note.id === action.note.id
             )
             if(editNote) {
-                editNote.title = action.note.title
-                editNote.content = action.note.content
+                editNote.title = removeHTMLTags(action.note.title)
+                editNote.content = removeHTMLTags(action.note.content)
             }
             const editedArray = state.notes.map(function(item) {
                 return item.id === action.note.id ? editNote as INote : item;

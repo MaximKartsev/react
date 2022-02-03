@@ -1,8 +1,9 @@
 import * as React from "react"
-import {useCallback, useState} from "react"
+import {useCallback, useMemo, useState} from "react"
 import {Dispatch} from "redux"
 import {useDispatch} from "react-redux"
 import {deleteNoteAction, editModeAction, viewModeAction} from "../store/actionCreators";
+import {removeHTMLTags} from "../helper/html";
 
 type Props = {
     note: INote
@@ -27,8 +28,8 @@ export const NotePreview: React.FC<Props> = ({note}) => {
         [dispatch]
     )
 
-    const [title] = useState(() => note.title.replace(/(<([^>]+)>)/gi, ""));
-    const [content] = useState(() => note.content.replace(/(<([^>]+)>)/gi, "").substring(0, previewContentLength));
+    const title = useMemo(() => removeHTMLTags(note.title), [note.title]);
+    const content = useMemo(() => removeHTMLTags(note.content).substring(0, previewContentLength), [note.content]);
 
     return (
         <div className="note-container">
